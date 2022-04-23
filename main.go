@@ -167,6 +167,7 @@ func main() {
 
 	app := &cli.App{
 		Usage: "A CLI wrapper for the Viscosity application in MacOS based on the Applescript API.",
+		UsageText: "vpn command [argument]",
 		Commands: []*cli.Command{
 			listCmd,
 			offCmd,
