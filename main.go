@@ -21,11 +21,13 @@ import (
 )
 
 const (
+	// States of a VPN connection
 	_stateConnected    = "Connected"
 	_stateDisconnected = "Disconnected"
 	_stateNotFound     = "NotFound"
 )
 
+// VPN has a list of profiles.
 type VPN struct {
 	profiles []string
 }
@@ -42,6 +44,7 @@ func NewVPN() *VPN {
 	return &vpn
 }
 
+// getProfiles finds the connection states of the VPN profiles.
 func (vpn VPN) getProfileStates() []string {
 	// We take advantage of the fact that the order of the profile names returned earlier corresponds
 	// to the order of the state of the profiles returned.
@@ -55,6 +58,7 @@ func (vpn VPN) getProfileStates() []string {
 	return states
 }
 
+// getProfileStates finds the state of the connection of the given profile.
 func (vpn VPN) getProfileState(profile string) string {
 	states := vpn.getProfileStates()
 	for k, v := range states {
@@ -65,6 +69,7 @@ func (vpn VPN) getProfileState(profile string) string {
 	return _stateNotFound
 }
 
+// disconnect disconnects all VPN connections.
 func (vpn VPN) disconnect() {
 	err := sh.Command("osascript", "-e", "tell application \"Viscosity\" to disconnectall").Run()
 	if err != nil {
@@ -72,6 +77,7 @@ func (vpn VPN) disconnect() {
 	}
 }
 
+// connect connects the VPN using the given profile.
 func (vpn VPN) connect(profile string) error {
 	var valid bool
 	for _, v := range vpn.profiles {
@@ -93,6 +99,7 @@ func (vpn VPN) connect(profile string) error {
 	return nil
 }
 
+// listProfiles prints out the list of available VPN profiles and the connection states.
 func (vpn VPN) listProfiles() {
 	states := vpn.getProfileStates()
 	for k, v := range vpn.profiles {
@@ -107,6 +114,7 @@ func (vpn VPN) listProfiles() {
 func main() {
 	vpn := NewVPN()
 
+	// Command to list out the VPN profiles available and the connection states.
 	listCmd := &cli.Command{
 		Name:  "list",
 		Usage: "list the available VPN profiles and see the corresponding states",
@@ -116,6 +124,7 @@ func main() {
 		},
 	}
 
+	// Command to disconnect the VPN connection.
 	start := time.Now()
 	offCmd := &cli.Command{
 		Name:  "off",
@@ -139,6 +148,7 @@ func main() {
 		},
 	}
 
+	// Command to connect the VPN using the given profile.
 	onCmd := &cli.Command{
 		Name:  "on",
 		Usage: "connect VPN for the given profile",
