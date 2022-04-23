@@ -1,6 +1,6 @@
 # vpn
 
-💻 🔑 🖥️ 
+⛱️
 
 `vpn` is a convenient CLI wrapper for the MacOS VPN application `Viscosity`.
 
