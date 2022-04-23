@@ -28,7 +28,7 @@ NAME:
    vpn - A CLI wrapper for the Viscosity application in MacOS based on the Applescript API.
 
 USAGE:
-   vpn [global options] command [command options] [arguments...]
+   vpn command [argument]
 
 COMMANDS:
    list     list the available VPN profiles and see the corresponding states
@@ -38,5 +38,4 @@ COMMANDS:
 
 GLOBAL OPTIONS:
    --help, -h  show help (default: false)
-
 ```
