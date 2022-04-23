@@ -39,6 +39,8 @@ type spin struct {
 	durationFunc func() bool
 }
 
+// do prints a symbol and a status. The symbol can be printed with different colors
+// at each update to give a dynamic effect.
 func (s spin) do() {
 	for i := 0; s.durationFunc(); i++ {
 		j, k := i%len(s.symbolColors), i%len(s.symbols)
