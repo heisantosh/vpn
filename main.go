@@ -69,6 +69,16 @@ func (vpn VPN) getProfileState(profile string) string {
 	return _stateNotFound
 }
 
+func (vpn VPN) which() {
+	states := vpn.getProfileStates()
+	for k, v := range states {
+		if v == _stateConnected {
+			fmt.Println(vpn.profiles[k])
+			return
+		}
+	}
+}
+
 // disconnect disconnects all VPN connections.
 func (vpn VPN) disconnect() {
 	err := sh.Command("osascript", "-e", "tell application \"Viscosity\" to disconnectall").Run()
@@ -124,6 +134,16 @@ func main() {
 		},
 	}
 
+	// Command to get currently connected VPN profile.
+	whichCmd := &cli.Command{
+		Name:  "which",
+		Usage: "find the currently connectd VPN profile",
+		Action: func(ctx *cli.Context) error {
+			vpn.which()
+			return nil
+		},
+	}
+
 	// Command to disconnect the VPN connection.
 	start := time.Now()
 	offCmd := &cli.Command{
@@ -150,8 +170,8 @@ func main() {
 
 	// Command to connect the VPN using the given profile.
 	onCmd := &cli.Command{
-		Name:  "on",
-		Usage: "connect VPN for the given profile",
+		Name:      "on",
+		Usage:     "connect VPN for the given profile",
 		UsageText: "vpn on <profile>",
 		Action: func(ctx *cli.Context) error {
 			profile := ctx.Args().Get(0)
@@ -176,10 +196,11 @@ func main() {
 	}
 
 	app := &cli.App{
-		Usage: "A CLI wrapper for the Viscosity application in MacOS based on the Applescript API.",
+		Usage:     "A CLI wrapper for the Viscosity application in MacOS based on the Applescript API.",
 		UsageText: "vpn command [argument]",
 		Commands: []*cli.Command{
 			listCmd,
+			whichCmd,
 			offCmd,
 			onCmd,
 		},
