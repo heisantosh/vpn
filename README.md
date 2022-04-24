@@ -32,6 +32,7 @@ USAGE:
 
 COMMANDS:
    list     list the available VPN profiles and see the corresponding states
+   which    find the currently connectd VPN profile
    off      disconnect the VPN connection
    on       connect VPN for the given profile
    help, h  Shows a list of commands or help for one command
