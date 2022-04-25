@@ -128,6 +128,7 @@ func main() {
 	listCmd := &cli.Command{
 		Name:  "list",
 		Usage: "list the available VPN profiles and see the corresponding states",
+		UsageText: "vpn list",
 		Action: func(ctx *cli.Context) error {
 			vpn.listProfiles()
 			return nil
@@ -138,6 +139,7 @@ func main() {
 	whichCmd := &cli.Command{
 		Name:  "which",
 		Usage: "find the currently connectd VPN profile",
+		UsageText: "vpn which",
 		Action: func(ctx *cli.Context) error {
 			vpn.which()
 			return nil
@@ -149,6 +151,7 @@ func main() {
 	offCmd := &cli.Command{
 		Name:  "off",
 		Usage: "disconnect the VPN connection",
+		UsageText: "vpn off",
 		Action: func(ctx *cli.Context) error {
 			offSpin := spin{
 				// Nerdfont symbol nf-mdi-lan_disconnect
