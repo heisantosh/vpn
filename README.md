@@ -15,6 +15,7 @@ It is based on the Applescript API for Viscosity https://www.sparklabs.com/suppo
 ## Prerequisites
 * OS : `MacOS`
 * Application: `Viscosity`
+* Profiles are set up in `Viscosity`
 
 ## Installation
 ### Using `Go`
