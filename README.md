@@ -4,7 +4,11 @@
 
 `vpn` is a convenient CLI wrapper for the MacOS VPN application `Viscosity`.
 
-It allows to connect a given VPN profile, disconnect and list out the available profiles.
+It allows to 
+* connect a given VPN profile
+* disconnect
+* list out the available profiles
+* find the currently connected profile
 
 It is based on the Applescript API for Viscosity https://www.sparklabs.com/support/kb/article/controlling-viscosity-with-applescript-mac/.
 
