@@ -27,7 +27,7 @@ $ go install github.com/heisantosh/vpn@latest
 Prebuilt binary can be downloaded from here https://github.com/heisantosh/vpn/releases.
 
 ## Usage
-```bash
+```text
 $ vpn help
 NAME:
    vpn - A CLI wrapper for the Viscosity application in MacOS based on the Applescript API.
