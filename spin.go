@@ -10,7 +10,7 @@ import (
 )
 
 // Helper functions to print a string in a particular color
-// using ASCII code.
+// using ANSI escape codes - https://en.wikipedia.org/wiki/ANSI_escape_code.
 
 func red(s string) string {
 	return "\033[31m" + s + "\033[0m"
@@ -35,7 +35,9 @@ func yellow(s string) string {
 type spin struct {
 	symbols      []string
 	symbolColors []func(string) string
+	// statusFunc returns the status to be displayed.
 	statusFunc   func() string
+	// durationFunc returns true if the spinner should be displayed.
 	durationFunc func() bool
 }
 
@@ -44,7 +46,7 @@ type spin struct {
 func (s spin) do() {
 	for i := 0; s.durationFunc(); i++ {
 		j, k := i%len(s.symbolColors), i%len(s.symbols)
-		fmt.Printf("\r%s  %s", s.symbolColors[j](s.symbols[k]), s.statusFunc())
+		fmt.Printf("\r\033[K%s  %s", s.symbolColors[j](s.symbols[k]), s.statusFunc())
 		time.Sleep(300 * time.Millisecond)
 	}
 	fmt.Print("\r\033[K")
