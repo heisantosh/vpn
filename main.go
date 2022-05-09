@@ -103,6 +103,12 @@ func (vpn VPN) connect(profile string) error {
 		return errors.New("invalid VPN profile: " + profile)
 	}
 
+	// Disconnect any existing VPN to connect with new profile.
+	vpn.disconnect()
+	for strings.Contains(strings.Join(vpn.getProfileStates(), ","), _stateConnected) {
+		time.Sleep(1 * time.Second)
+	}
+
 	if err := sh.Command("osascript", "-e", "tell application \"Viscosity\" to connect \""+profile+"\"").Run(); err != nil {
 		log.Fatal(err)
 	}
@@ -158,10 +164,12 @@ func main() {
 				symbols:      []string{"", "", ""},
 				symbolColors: []func(string) string{red, black, yellow},
 				statusFunc:   func() string { return "Disonnecting" },
-				// Disconnecting happens almost instantly but we want to
-				// wait a bit to spin for dramatic effect ;) 😜
 				durationFunc: func() bool {
-					return time.Since(start) < 4*time.Second
+					// At the least wait for 2 seconds to complete the disconnect command.
+					for time.Since(start) < 2 * time.Second || strings.Contains(strings.Join(vpn.getProfileStates(), ","), _stateConnected) {
+						return true
+					}
+					return false
 				},
 			}
 			vpn.disconnect()
